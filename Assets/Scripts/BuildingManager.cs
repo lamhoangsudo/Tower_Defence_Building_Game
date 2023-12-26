@@ -1,20 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
-    [SerializeField] private Transform PfWoodHarvester;
+    private BuildingTypeSO building;
+    private BuildingTypeListSO BuildingTypeList;
     private Camera mainCamera;
+    private const string stoneHarvester = "SH1";
+    private const string woodHarvester = "WH1";
     private void Start()
     {
         mainCamera = Camera.main;
+        BuildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name);
     }
     private void Update()
     {
         if(Input.GetMouseButtonDown(0)) 
         {
-            Instantiate(PfWoodHarvester, GetMouseWorldPositions(), Quaternion.identity);
+            building = BuildingTypeList.buildingTypes.Where(bd => bd.buildingTypeID.Equals(stoneHarvester)).FirstOrDefault();
+            if (building != null)
+            {
+                Instantiate(building.prefab, GetMouseWorldPositions(), Quaternion.identity);
+            }
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            building = BuildingTypeList.buildingTypes.Where(bd => bd.buildingTypeID.Equals(woodHarvester)).FirstOrDefault();
+            if (building != null)
+            {
+                Instantiate(building.prefab, GetMouseWorldPositions(), Quaternion.identity);
+            }
         }
     }
     private Vector3 GetMouseWorldPositions()
