@@ -10,10 +10,13 @@ public class BuildingManager : MonoBehaviour
     private Camera mainCamera;
     private const string stoneHarvester = "SH1";
     private const string woodHarvester = "WH1";
+    private void Awake()
+    {
+        BuildingTypeList = Resources.Load<BuildingTypeListSO>(nameof(BuildingTypeListSO));
+    }
     private void Start()
     {
-        mainCamera = Camera.main;
-        BuildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name);
+        mainCamera = Camera.main;       
     }
     private void Update()
     {
