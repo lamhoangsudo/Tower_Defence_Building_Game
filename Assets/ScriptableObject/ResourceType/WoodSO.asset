@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceTypeID: RW
   resourceTypeName: Wood
+  sprite: {fileID: 21300000, guid: fc3fff3f680ba594e939cc4d8894713f, type: 3}

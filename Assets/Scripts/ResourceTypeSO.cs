@@ -6,4 +6,5 @@ public class ResourceTypeSO : ScriptableObject
 {
     public string resourceTypeID;
     public string resourceTypeName;
+    public Sprite sprite;
 }
