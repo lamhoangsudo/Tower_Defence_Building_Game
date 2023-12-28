@@ -19,8 +19,9 @@ public class ResourceUI : MonoBehaviour
         int index = 0;
         foreach (var resourceType in resourceTypeListSO.resourceTypesList)
         {
-            resourceTemplate.gameObject.SetActive(true);  
-            Instantiate(resourceTemplate, transform);                   
+            resourceTemplate.gameObject.SetActive(true);
+            resourceTemplate = Instantiate(resourceTemplate, transform);
+            resourceTemplate.name = "resource"+ resourceType.resourceTypeName +"Template";
             float offsetAmount = -160f;
             resourceTypeTransformDictionary.Add(resourceType, resourceTemplate);
             resourceTypeTransformDictionary[resourceType].GetComponent<RectTransform>().anchoredPosition = new Vector2(offsetAmount * index, 0);
