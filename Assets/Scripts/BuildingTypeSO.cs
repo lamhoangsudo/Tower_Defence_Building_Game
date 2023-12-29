@@ -8,4 +8,5 @@ public class BuildingTypeSO : ScriptableObject
     public string buildingTypeName;
     public Transform prefab;
     public ResourceGeneratorData resourceGeneratorData;
+    public Sprite sprite;
 }

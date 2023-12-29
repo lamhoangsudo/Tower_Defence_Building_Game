@@ -1,39 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildingManager : MonoBehaviour
 {
-    private BuildingTypeSO building;
+    private BuildingTypeSO activebuilding;
     private BuildingTypeListSO BuildingTypeList;
     private Camera mainCamera;
     private const string stoneHarvester = "SH1";
     private const string woodHarvester = "WH1";
+    public static BuildingManager Instance { get; private set; }
     private void Awake()
     {
+        Instance = this;
         BuildingTypeList = Resources.Load<BuildingTypeListSO>(nameof(BuildingTypeListSO));
+        activebuilding = null;
     }
     private void Start()
     {
-        mainCamera = Camera.main;       
+        mainCamera = Camera.main;
     }
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            building = BuildingTypeList.buildingTypes.Where(bd => bd.buildingTypeID.Equals(stoneHarvester)).FirstOrDefault();
-            if (building != null)
+            if (activebuilding != null)
             {
-                Instantiate(building.prefab, GetMouseWorldPositions(), Quaternion.identity);
-            }
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            building = BuildingTypeList.buildingTypes.Where(bd => bd.buildingTypeID.Equals(woodHarvester)).FirstOrDefault();
-            if (building != null)
-            {
-                Instantiate(building.prefab, GetMouseWorldPositions(), Quaternion.identity);
+                Instantiate(activebuilding.prefab, GetMouseWorldPositions(), Quaternion.identity);
             }
         }
     }
@@ -42,5 +39,9 @@ public class BuildingManager : MonoBehaviour
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPosition.z = 0f;
         return mouseWorldPosition;
+    }
+    public void SetActivebuilding(BuildingTypeSO buildingType)
+    {
+        activebuilding = buildingType;
     }
 }
