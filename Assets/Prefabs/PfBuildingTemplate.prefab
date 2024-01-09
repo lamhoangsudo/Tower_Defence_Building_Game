@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 2829268088880217939}
   - component: {fileID: 8604996128547477223}
   m_Layer: 5
-  m_Name: BuildingTemplate
+  m_Name: PfBuildingTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
