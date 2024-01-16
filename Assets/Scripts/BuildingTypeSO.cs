@@ -8,5 +8,17 @@ public class BuildingTypeSO : ScriptableObject
     public string buildingTypeName;
     public Transform prefab;
     public ResourceGeneratorData resourceGeneratorData;
+    public BuildResourceAmount[] resourceAmount;
     public Sprite sprite;
+    public float minConstructionRadius;
+    public float maxConstructionRadius;
+    public string GetConstructionResourceNeedString()
+    {
+        string output = string.Empty;
+        foreach (var buildResource in resourceAmount)
+        {
+            output += buildResource.resource.resourceTypeName + ": " + buildResource.amount + "\n"; 
+        }
+        return output;
+    }
 }

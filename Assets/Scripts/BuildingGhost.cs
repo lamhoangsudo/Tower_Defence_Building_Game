@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class BuildingGhost : MonoBehaviour
 {
-    [SerializeField] private GameObject BuildingGhostSprite;
+    [SerializeField] private GameObject buildingGhostSprite;
+    [SerializeField] private GameObject resourceNearByOverlay;
+    private ResourceNearByOverlay resourceNearBy;
     private void Awake()
     {
         Hide();
+        resourceNearBy = resourceNearByOverlay.GetComponent<ResourceNearByOverlay>();
     }
     private void Start()
     {
@@ -16,7 +19,7 @@ public class BuildingGhost : MonoBehaviour
 
     private void Instance_OnActiveBuildingTypeChanged(object sender, BuildingTypeSO e)
     {
-        if (e != null) Show(e.sprite);
+        if (e != null) Show(e);
         else Hide();
     }
 
@@ -24,13 +27,16 @@ public class BuildingGhost : MonoBehaviour
     {
         transform.position = UtilClass.GetMouseWorldPositions();
     }
-    private void Show(Sprite ghostSprite)
+    private void Show(BuildingTypeSO buildingGhost)
     {
-        BuildingGhostSprite.SetActive(true);
-        BuildingGhostSprite.GetComponent<SpriteRenderer>().sprite = ghostSprite;
+        buildingGhostSprite.SetActive(true);
+        resourceNearByOverlay.SetActive(true);
+        resourceNearBy.SetResourceGeneretor(buildingGhost.resourceGeneratorData);
+        buildingGhostSprite.GetComponent<SpriteRenderer>().sprite = buildingGhost.sprite;
     }
     private void Hide()
     {
-        BuildingGhostSprite.SetActive(false);
+        buildingGhostSprite.SetActive(false);
+        resourceNearByOverlay.SetActive(false);
     }
 }

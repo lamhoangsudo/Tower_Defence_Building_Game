@@ -28,4 +28,22 @@ public class ResourceManager : MonoBehaviour
     {
         return resourceAmountDictionary[resourceTypeSO];
     }
+    public bool CanAffort(BuildResourceAmount[] buildResourceAmounts)
+    {
+        foreach(var amount in buildResourceAmounts)
+        {
+            if(GetResourceTypeAmount(amount.resource) < amount.amount)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public void SetResourceAfterBuild(BuildResourceAmount[] buildResourceAmounts)
+    {
+        foreach (var amount in buildResourceAmounts)
+        {
+            resourceAmountDictionary[amount.resource] -= amount.amount;
+        }
+    }
 }
