@@ -11,8 +11,9 @@ public class BuildingManager : MonoBehaviour
     private BuildingTypeSO activebuilding;
     private BuildingTypeListSO BuildingTypeList;
     private Camera mainCamera;
-    private const string stoneHarvester = "SH1";
-    private const string woodHarvester = "WH1";
+    [SerializeField] private GameObject headQuarter;
+    //private const string stoneHarvester = "SH1";
+    //private const string woodHarvester = "WH1";
     public event EventHandler<BuildingTypeSO> OnActiveBuildingTypeChanged;
     public static BuildingManager Instance { get; private set; }
     private void Awake()
@@ -46,6 +47,10 @@ public class BuildingManager : MonoBehaviour
                 ToolTipUI.Instance.Show(ErrorMessage, new ToolTipUI.ToolTipTimerShow { timer = 2f });
             }
             
+        }
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            EnemySystem.CreateEnemy(UtilClass.GetMouseWorldPositions());
         }
     }
     public void SetActivebuilding(BuildingTypeSO buildingType)
@@ -108,5 +113,9 @@ public class BuildingManager : MonoBehaviour
         }
         ErrorMessage = "Build to far to another building";
         return false;
+    }
+    public GameObject GetHeatQuarter()
+    {
+        return headQuarter;
     }
 }

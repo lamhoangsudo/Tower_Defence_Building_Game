@@ -26,5 +26,6 @@ MonoBehaviour:
   - resource: {fileID: 11400000, guid: f63ccdf5bc9931a4db858edc76067e23, type: 2}
     amount: 40
   sprite: {fileID: 21300000, guid: 539cfdfe4f5154741943b13b0c2ee634, type: 3}
-  minConstructionRadius: 3
+  minConstructionRadius: 5
   maxConstructionRadius: 10
+  healthAmount: 150
