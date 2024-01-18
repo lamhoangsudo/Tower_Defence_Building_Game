@@ -8,6 +8,7 @@ public class EnemySystem : MonoBehaviour
     private float enemyRadar;
     private float enemyRadarTimeMaxLoad = .2f;
     private float enemyRadarTimeLoad;
+    [SerializeField] private float maxHealth;
     private Transform target;
     public static EnemySystem CreateEnemy(Vector3 position)
     {
@@ -24,8 +25,23 @@ public class EnemySystem : MonoBehaviour
     }
     private void Start()
     {
+        HealthSystem healthSystem = GetComponent<HealthSystem>();
+        healthSystem.SetMaxHealth(maxHealth, true);
         target = BuildingManager.Instance.transform;
+        healthSystem.OnDamage += HealthSystem_OnDamage;
+        healthSystem.OnDead += HealthSystem_OnDead;
     }
+
+    private void HealthSystem_OnDead(object sender, System.EventArgs e)
+    {
+        Destroy(this.gameObject);
+    }
+
+    private void HealthSystem_OnDamage(object sender, System.EventArgs e)
+    {
+        
+    }
+
     private void Update()
     {
         HandlerTargeting();
@@ -34,7 +50,7 @@ public class EnemySystem : MonoBehaviour
     private void HandlerMovemnet()
     {
         Vector3 moveDir = Vector3.zero;
-        if(target != null)
+        if (target != null)
         {
             moveDir = (target.position - this.transform.position).normalized;
             Debug.DrawLine(transform.position, target.position, Color.red, 0.1f);
@@ -46,7 +62,7 @@ public class EnemySystem : MonoBehaviour
         enemyRadarTimeLoad -= Time.deltaTime;
         if (enemyRadarTimeLoad < 0f)
         {
-            enemyRadarTimeLoad = enemyRadarTimeMaxLoad;
+            enemyRadarTimeLoad += enemyRadarTimeMaxLoad;
             LookForTargets();
         }
     }
@@ -61,7 +77,7 @@ public class EnemySystem : MonoBehaviour
     private void LookForTargets()
     {
         Collider2D[] targetBuildingFound = Physics2D.OverlapCircleAll(transform.position, enemyRadar);
-        foreach (Collider2D targetBuild in targetBuildingFound.Reverse())
+        foreach (Collider2D targetBuild in targetBuildingFound)
         {
             if (targetBuild.GetComponent<BuildingTypeHolder>() != null)
             {
@@ -74,14 +90,11 @@ public class EnemySystem : MonoBehaviour
                 }
                 else
                 {
-                    if (Vector3.Distance(transform.position, targetBuild.transform.position) < Vector3.Distance(transform.position, transform.position))
-                    {
-                        target = targetBuild.transform;
-                    }
+                    target = targetBuild.transform;
                 }
             }
         }
-        if(target == null)
+        if (target == null)
         {
             target = BuildingManager.Instance.GetHeatQuarter().transform;
         }

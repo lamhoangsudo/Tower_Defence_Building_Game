@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1614633523662367634}
   - component: {fileID: 4749038506049474447}
   - component: {fileID: 1008482754690905111}
+  - component: {fileID: 4839953008359568958}
   m_Layer: 0
   m_Name: PfHeadQuarter
   m_TagString: Untagged
@@ -37,6 +38,7 @@ Transform:
   - {fileID: 6448244151478973233}
   - {fileID: 7393801926818175518}
   - {fileID: 2491921997485238632}
+  - {fileID: 8536720190169474623}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9020016086744184805
@@ -133,6 +135,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba60a3a215799c043a9d8ebda7559d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4839953008359568958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718823499994418285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd0969a6fe6e9348997c8624d4092da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointShot: {fileID: 8536720190169474623}
+--- !u!1 &9114327461729540110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8536720190169474623}
+  m_Layer: 0
+  m_Name: PointShot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8536720190169474623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9114327461729540110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7642608307094168369}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3272547327737893121
 PrefabInstance:
   m_ObjectHideFlags: 0

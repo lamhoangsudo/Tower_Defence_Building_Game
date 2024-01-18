@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class ResourceManager : MonoBehaviour
 {
+    [SerializeField]
     private Dictionary<ResourceTypeSO, int> resourceAmountDictionary;
     public event EventHandler OnResourceAmountChanged;
     public static ResourceManager Instance { get; private set; }
@@ -15,8 +17,7 @@ public class ResourceManager : MonoBehaviour
         ResourceTypeListSO resourceTypeListSO = Resources.Load<ResourceTypeListSO>(nameof(ResourceTypeListSO));
         foreach (var resourceTypeSO in resourceTypeListSO.resourceTypesList)
         {
-            //same resourceAmountDictionary[resourceTypeSO] = 0;
-            resourceAmountDictionary.Add(resourceTypeSO, 0);
+            resourceAmountDictionary.Add(resourceTypeSO, 100);
         }
     }
     public void AddResource(ResourceTypeSO resourceTypeSO, int amount)

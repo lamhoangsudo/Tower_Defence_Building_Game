@@ -30,9 +30,12 @@ public class BuildingGhost : MonoBehaviour
     private void Show(BuildingTypeSO buildingGhost)
     {
         buildingGhostSprite.SetActive(true);
-        resourceNearByOverlay.SetActive(true);
-        resourceNearBy.SetResourceGeneretor(buildingGhost.resourceGeneratorData);
         buildingGhostSprite.GetComponent<SpriteRenderer>().sprite = buildingGhost.sprite;
+        if (buildingGhost.ResourceGenerator == true)
+        {
+            resourceNearByOverlay.SetActive(true);
+            resourceNearBy.SetResourceGeneretor(buildingGhost.resourceGeneratorData);
+        }
     }
     private void Hide()
     {

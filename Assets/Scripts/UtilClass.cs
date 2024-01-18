@@ -12,4 +12,10 @@ public static class UtilClass
         mouseWorldPosition.z = 0f;
         return mouseWorldPosition;
     }
+    public static float GetAngleFromVector(Vector3 vector)
+    {
+        float radians = Mathf.Atan2(vector.y, vector.x);
+        float degress = Mathf.Rad2Deg * radians;
+        return degress;
+    }
 }
