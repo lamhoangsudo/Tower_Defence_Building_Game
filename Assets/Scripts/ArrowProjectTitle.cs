@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArrowProjectTitle : MonoBehaviour
 {
     private Transform target;
+    [SerializeField]
     private float moveSpeed =  10f;
     private Vector3 lastDir;
     private float ArrowMaxLife = 2f;

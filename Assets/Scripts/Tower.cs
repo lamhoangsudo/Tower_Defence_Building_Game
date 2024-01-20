@@ -8,7 +8,8 @@ public class Tower : MonoBehaviour
     private float towerRadar;
     private float towerRadarTimeMaxLoad = .2f;
     private float towerRadarTimeLoad;
-    private float towerShootMaxLoad = .2f;
+    [SerializeField]
+    private float towerShootMaxLoad = .5f;
     private float towerShootTimeLoad;
     private Transform target;
     [SerializeField]
@@ -39,7 +40,7 @@ public class Tower : MonoBehaviour
             if (towerShootTimeLoad < 0f)
             {
                 towerShootTimeLoad += towerShootMaxLoad;
-                ArrowProjectTitle.CreateArrowProjectTitle(transform.position, target);
+                ArrowProjectTitle.CreateArrowProjectTitle(pointShot.position, target);
             }           
         }
     }

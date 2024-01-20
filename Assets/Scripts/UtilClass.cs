@@ -18,4 +18,8 @@ public static class UtilClass
         float degress = Mathf.Rad2Deg * radians;
         return degress;
     }
+    public static Vector3 GetRamdomVector()
+    {
+        return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
+    }
 }
