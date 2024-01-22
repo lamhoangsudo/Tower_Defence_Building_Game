@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 public class EnemyWaveManager : MonoBehaviour
 {
     public enum State
@@ -9,20 +10,27 @@ public class EnemyWaveManager : MonoBehaviour
         WaitingToSpawnWave,
         SpawningWave,
     }
-    private int wave;
+    public event EventHandler OnNumberWaveChange;
+    public int wave {  get; private set; }
     private int numberEnemyWaveIncreases = 2;
-    private float timeToSpawn;
+    public float timeToSpawn {  get; private set; }
     private float timeToWaitSpawnNextWavel = 10f;
-    private float timeToSpawnEnenmy;
+    public float timeToSpawnEnenmy {  get; private set; }
     private float timeToWaitSpawnNextEnemy;
     private int numberOfEnemiesInWave;
     private State state;
     [SerializeField]
     private List<Transform> ListSpawnPositionTransform;
-    private Transform spawnPositionTransform;
+    public Transform spawnPositionTransform {  get; private set; }
+    public static EnemyWaveManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         state = State.WaitingToSpawnWave;
+        timeToSpawn = 3f;
         wave = 0;
     }
     private void Update()
@@ -33,8 +41,7 @@ public class EnemyWaveManager : MonoBehaviour
                 timeToSpawn -= Time.deltaTime;
                 if (timeToSpawn <= 0)
                 {
-                    timeToSpawn = timeToWaitSpawnNextWavel;
-                    SpawnEnemy(ListSpawnPositionTransform, 2f, 10);
+                    SpawnEnemy(ListSpawnPositionTransform, 3f, 10);
                 }
                 break;
             case State.SpawningWave:
@@ -50,6 +57,7 @@ public class EnemyWaveManager : MonoBehaviour
                 }
                 else
                 {
+                    timeToSpawn = timeToWaitSpawnNextWavel;
                     state = State.WaitingToSpawnWave;
                 }
                 break;
@@ -62,5 +70,6 @@ public class EnemyWaveManager : MonoBehaviour
         this.timeToWaitSpawnNextEnemy = timeTotalToSpawnAllEnemy / numberOfEnemiesInWave;      
         wave++;
         state = State.SpawningWave;
+        OnNumberWaveChange?.Invoke(this, EventArgs.Empty);
     }
 }

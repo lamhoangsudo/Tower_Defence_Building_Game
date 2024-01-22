@@ -6,7 +6,7 @@ public class ArrowProjectTitle : MonoBehaviour
 {
     private Transform target;
     [SerializeField]
-    private float moveSpeed =  10f;
+    private float moveSpeed =  50f;
     private Vector3 lastDir;
     private float ArrowMaxLife = 2f;
     private float ArrowTimeLife;
@@ -49,14 +49,13 @@ public class ArrowProjectTitle : MonoBehaviour
             }
         }
         transform.eulerAngles = new Vector3 (0, 0, UtilClass.GetAngleFromVector(moveDir));
-        transform.position += moveDir * Time.deltaTime * moveSpeed;
+        transform.position += moveSpeed * Time.deltaTime * moveDir;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        EnemySystem enemy = collision.gameObject.GetComponent<EnemySystem>();
-        if (enemy != null) 
+        if (collision.gameObject.TryGetComponent<EnemySystem>(out var enemy)) 
         {
-            enemy.GetComponent<HealthSystem>().Damage(10);
+            enemy.GetComponent<HealthSystem>().Damage(20);
             Destroy(this.gameObject);
         };
     }

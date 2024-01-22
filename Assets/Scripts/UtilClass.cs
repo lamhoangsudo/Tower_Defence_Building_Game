@@ -22,4 +22,27 @@ public static class UtilClass
     {
         return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
     }
+    public static Transform LookForTargets(Transform pointCenter, float radius, string componentType)
+    {
+        Collider2D[] targetEnemyFound = Physics2D.OverlapCircleAll(pointCenter.position, radius);
+        Transform target = null;
+        foreach (Collider2D targetEnemy in targetEnemyFound)
+        {
+            if (targetEnemy.GetComponent(componentType) != null)
+            {
+                if (target != null)
+                {
+                    if (Vector3.Distance(pointCenter.position, targetEnemy.transform.position) < Vector3.Distance(pointCenter.position, target.position))
+                    {
+                        target = targetEnemy.transform;
+                    }
+                }
+                else
+                {
+                    target = targetEnemy.transform;
+                }
+            }
+        }
+        return target;
+    }
 }

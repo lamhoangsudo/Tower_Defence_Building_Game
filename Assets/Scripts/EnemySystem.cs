@@ -63,7 +63,7 @@ public class EnemySystem : MonoBehaviour
         if (enemyRadarTimeLoad < 0f)
         {
             enemyRadarTimeLoad += enemyRadarTimeMaxLoad;
-            LookForTargets();
+            EnemyLookForTargets();
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -74,26 +74,9 @@ public class EnemySystem : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    private void LookForTargets()
+    private void EnemyLookForTargets()
     {
-        Collider2D[] targetBuildingFound = Physics2D.OverlapCircleAll(transform.position, enemyRadar);
-        foreach (Collider2D targetBuild in targetBuildingFound)
-        {
-            if (targetBuild.GetComponent<BuildingTypeHolder>() != null)
-            {
-                if (target != null)
-                {
-                    if (Vector3.Distance(transform.position, targetBuild.transform.position) < Vector3.Distance(transform.position, target.position))
-                    {
-                        target = targetBuild.transform;
-                    }
-                }
-                else
-                {
-                    target = targetBuild.transform;
-                }
-            }
-        }
+        target = UtilClass.LookForTargets(this.transform, enemyRadar, "BuildingTypeHolder");
         if (target == null)
         {
             target = BuildingManager.Instance.GetHeatQuarter().transform;
