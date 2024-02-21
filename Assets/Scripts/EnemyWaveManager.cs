@@ -13,6 +13,8 @@ public class EnemyWaveManager : MonoBehaviour
     public event EventHandler OnNumberWaveChange;
     public int wave {  get; private set; }
     private int numberEnemyWaveIncreases = 2;
+    private float timeMaxEnemyStartMoving = 1.5f;
+    private float timeEnemyStartMoving;
     public float timeToSpawn {  get; private set; }
     private float timeToWaitSpawnNextWavel = 10f;
     public float timeToSpawnEnenmy {  get; private set; }
@@ -22,10 +24,12 @@ public class EnemyWaveManager : MonoBehaviour
     [SerializeField]
     private List<Transform> ListSpawnPositionTransform;
     public Transform spawnPositionTransform {  get; private set; }
-    public static EnemyWaveManager instance;
+    public static EnemyWaveManager Instance;
+    public event EventHandler OnFullEnemyWaveReady;
+    private bool playOne;
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
     private void Start()
     {
@@ -58,7 +62,18 @@ public class EnemyWaveManager : MonoBehaviour
                 else
                 {
                     timeToSpawn = timeToWaitSpawnNextWavel;
-                    state = State.WaitingToSpawnWave;
+                    timeEnemyStartMoving -= Time.deltaTime;
+                    if(playOne)
+                    {
+                        SoundManager.Instance.PlaySound(SoundManager.Sound.EnemyWaveStarting);
+                        playOne = false;
+                    }
+                    if (timeEnemyStartMoving <= 0)
+                    {
+                        timeEnemyStartMoving = timeMaxEnemyStartMoving;
+                        OnFullEnemyWaveReady?.Invoke(this, EventArgs.Empty);
+                        state = State.WaitingToSpawnWave;
+                    }
                 }
                 break;
         }
@@ -67,8 +82,10 @@ public class EnemyWaveManager : MonoBehaviour
     {
         this.spawnPositionTransform = spawnPositionTransform[Random.Range(0, spawnPositionTransform.Count)];       
         this.numberOfEnemiesInWave = numberOfEnemiesInWave + numberEnemyWaveIncreases * wave;
-        this.timeToWaitSpawnNextEnemy = timeTotalToSpawnAllEnemy / numberOfEnemiesInWave;      
+        this.timeToWaitSpawnNextEnemy = timeTotalToSpawnAllEnemy / numberOfEnemiesInWave;
+        timeEnemyStartMoving = timeMaxEnemyStartMoving;
         wave++;
+        playOne = true;
         state = State.SpawningWave;
         OnNumberWaveChange?.Invoke(this, EventArgs.Empty);
     }

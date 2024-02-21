@@ -14,6 +14,7 @@ public class BuildingTypeSO : ScriptableObject
     public float minConstructionRadius;
     public float maxConstructionRadius;
     public float healthAmount;
+    public float timeBuildConstructMax;
     public string GetConstructionResourceNeedString()
     {
         string output = string.Empty;

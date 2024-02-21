@@ -15,6 +15,7 @@ MonoBehaviour:
   buildingTypeID: TW
   buildingTypeName: Tower
   prefab: {fileID: 691013639755878802, guid: 41539321abe675448b47c56afaee39f9, type: 3}
+  ResourceGenerator: 0
   resourceGeneratorData:
     timerGenerator: 0
     resourceTypeSO: {fileID: 0}
@@ -29,3 +30,4 @@ MonoBehaviour:
   minConstructionRadius: 5
   maxConstructionRadius: 20
   healthAmount: 90
+  timeBuildConstructMax: 8

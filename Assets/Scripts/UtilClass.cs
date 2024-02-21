@@ -22,13 +22,13 @@ public static class UtilClass
     {
         return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
     }
-    public static Transform LookForTargets(Transform pointCenter, float radius, string componentType)
+    public static Transform LookForTargets<T>(Transform pointCenter, float radius)
     {
         Collider2D[] targetEnemyFound = Physics2D.OverlapCircleAll(pointCenter.position, radius);
         Transform target = null;
         foreach (Collider2D targetEnemy in targetEnemyFound)
         {
-            if (targetEnemy.GetComponent(componentType) != null)
+            if (targetEnemy.GetComponent<T>() != null)
             {
                 if (target != null)
                 {

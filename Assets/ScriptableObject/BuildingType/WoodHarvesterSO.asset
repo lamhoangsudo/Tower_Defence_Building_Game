@@ -15,6 +15,7 @@ MonoBehaviour:
   buildingTypeID: WH1
   buildingTypeName: Wood Harvester
   prefab: {fileID: 7642608307094168369, guid: 3120f055fbaaed9498ffaedb2a07b17a, type: 3}
+  ResourceGenerator: 0
   resourceGeneratorData:
     timerGenerator: 0.5
     resourceTypeSO: {fileID: 11400000, guid: 7f886221d6ae4fd439ddfcd912971847, type: 2}
@@ -25,5 +26,6 @@ MonoBehaviour:
     amount: 10
   sprite: {fileID: 21300000, guid: 525e7390c8905ef44bb72fc754d44b9d, type: 3}
   minConstructionRadius: 3
-  maxConstructionRadius: 10
+  maxConstructionRadius: 20
   healthAmount: 90
+  timeBuildConstructMax: 5

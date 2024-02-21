@@ -15,6 +15,7 @@ MonoBehaviour:
   buildingTypeID: GH1
   buildingTypeName: Gold Harvester
   prefab: {fileID: 7642608307094168369, guid: e9f1781e599e5114da748605b0e24f99, type: 3}
+  ResourceGenerator: 0
   resourceGeneratorData:
     timerGenerator: 2
     resourceTypeSO: {fileID: 11400000, guid: 83b4ca8a78157c147a6a5bfbc8844245, type: 2}
@@ -29,3 +30,4 @@ MonoBehaviour:
   minConstructionRadius: 5
   maxConstructionRadius: 10
   healthAmount: 150
+  timeBuildConstructMax: 10

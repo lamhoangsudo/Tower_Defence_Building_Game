@@ -15,6 +15,7 @@ MonoBehaviour:
   buildingTypeID: SH1
   buildingTypeName: Stone Harvester
   prefab: {fileID: 7642608307094168369, guid: a92284b05131023419b4b98ab67a51b6, type: 3}
+  ResourceGenerator: 0
   resourceGeneratorData:
     timerGenerator: 1
     resourceTypeSO: {fileID: 11400000, guid: f63ccdf5bc9931a4db858edc76067e23, type: 2}
@@ -27,3 +28,4 @@ MonoBehaviour:
   minConstructionRadius: 4
   maxConstructionRadius: 10
   healthAmount: 130
+  timeBuildConstructMax: 13

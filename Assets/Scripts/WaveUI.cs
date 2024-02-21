@@ -16,13 +16,13 @@ public class WaveUI : MonoBehaviour
     private Vector3 spawnPositionTransform;
     private void Start()
     {
-        EnemyWaveManager.instance.OnNumberWaveChange += Instance_OnNumberWaveChange;
+        EnemyWaveManager.Instance.OnNumberWaveChange += Instance_OnNumberWaveChange;
         camera = Camera.main;
     }
 
     private void Instance_OnNumberWaveChange(object sender, System.EventArgs e)
     {
-        spawnPositionTransform = EnemyWaveManager.instance.spawnPositionTransform.position;
+        spawnPositionTransform = EnemyWaveManager.Instance.spawnPositionTransform.position;
         SetTextWaveNumber();
     }
 
@@ -34,7 +34,7 @@ public class WaveUI : MonoBehaviour
     }
     private void HanderWaveEnenmyPointer()
     {
-        if (EnemyWaveManager.instance.timeToSpawn > 0)
+        if (EnemyWaveManager.Instance.timeToSpawn > 0)
         {
             waveEnenmyPointer.gameObject.SetActive(false);
         }
@@ -45,7 +45,7 @@ public class WaveUI : MonoBehaviour
     }
     private void HanderEnemyPointer()
     {
-        Transform target = UtilClass.LookForTargets(camera.transform, 900f, "EnemySystem");
+        Transform target = UtilClass.LookForTargets<EnemySystem>(camera.transform, 900f);
         if (target != null)
         {
             PointToPosition(target.position, 250f, enemyPointer);
@@ -58,13 +58,13 @@ public class WaveUI : MonoBehaviour
     }
     private void SetTextWaveNumber()
     {
-        waveNumber.SetText("Wave " + EnemyWaveManager.instance.wave.ToString());
+        waveNumber.SetText("Wave " + EnemyWaveManager.Instance.wave.ToString());
     }
     private void SetTextNextWaveTime()
     {
-        if (EnemyWaveManager.instance.timeToSpawn > 0)
+        if (EnemyWaveManager.Instance.timeToSpawn > 0)
         {
-            nextWaveTime.SetText("Next Wave In " + EnemyWaveManager.instance.timeToSpawn.ToString("F1") + "s");
+            nextWaveTime.SetText("Next Wave In " + EnemyWaveManager.Instance.timeToSpawn.ToString("F1") + "s");
             nextWaveTime.gameObject.SetActive(true);
         }
         else

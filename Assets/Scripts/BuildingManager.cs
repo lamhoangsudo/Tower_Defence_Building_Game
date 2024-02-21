@@ -25,30 +25,38 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
+        headQuarter.GetComponent<HealthSystem>().OnDead += BuildingManager_OnDead;
     }
+
+    private void BuildingManager_OnDead(object sender, EventArgs e)
+    {
+        GameOverUI.Instance.Show();
+    }
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && activebuilding != null)
         {
-            if (CanSpawnBuilding(activebuilding, UtilClass.GetMouseWorldPositions(), out string ErrorMessage)) 
+            if (CanSpawnBuilding(activebuilding, UtilClass.GetMouseWorldPositions(), out string ErrorMessage))
             {
-                if(ResourceManager.Instance.CanAffort(activebuilding.resourceAmount))
+                if (ResourceManager.Instance.CanAffort(activebuilding.resourceAmount))
                 {
                     ResourceManager.Instance.SetResourceAfterBuild(activebuilding.resourceAmount);
-                    Instantiate(activebuilding.prefab, UtilClass.GetMouseWorldPositions(), Quaternion.identity);
+                    BuildingConstruct.CreateBuildConstructTitle(UtilClass.GetMouseWorldPositions(), activebuilding);
+                    SoundManager.Instance.PlaySound(SoundManager.Sound.BuildingPlaced);
                 }
                 else
                 {
-                    ToolTipUI.Instance.Show("Can't affort " + activebuilding.GetConstructionResourceNeedString(), new ToolTipUI.ToolTipTimerShow { timer = 2f});
+                    ToolTipUI.Instance.Show("Can't affort " + activebuilding.GetConstructionResourceNeedString(), new ToolTipUI.ToolTipTimerShow { timer = 2f });
                 }
             }
             else
             {
                 ToolTipUI.Instance.Show(ErrorMessage, new ToolTipUI.ToolTipTimerShow { timer = 2f });
             }
-            
+
         }
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             EnemySystem.CreateEnemy(UtilClass.GetMouseWorldPositions());
         }
@@ -60,12 +68,15 @@ public class BuildingManager : MonoBehaviour
     }
     private bool CanSpawnBuilding(BuildingTypeSO buildingType, Vector3 position, out string ErrorMessage)
     {
+        bool check = false;
+        ErrorMessage = "";
         BoxCollider2D boxCollider2D = buildingType.prefab.GetComponent<BoxCollider2D>();
         Collider2D[] colliderBuilding = Physics2D.OverlapBoxAll(position + (Vector3)boxCollider2D.offset, boxCollider2D.size, 0);
         if (colliderBuilding.Length > 0)
         {
             ErrorMessage = "Area is not clear";
-            return false;
+            check = false;
+            return check;
         }
         colliderBuilding = Physics2D.OverlapCircleAll(position, buildingType.minConstructionRadius);
         foreach (Collider2D collider2D in colliderBuilding)
@@ -74,7 +85,7 @@ public class BuildingManager : MonoBehaviour
             if (colliderBuilding.Length == 0)
             {
                 ErrorMessage = "";
-                return true;
+                check = true;
             }
             else
             {
@@ -83,12 +94,13 @@ public class BuildingManager : MonoBehaviour
                     if (!buildingTypeHolder.buildingTypeSO.Equals(buildingType))
                     {
                         ErrorMessage = "";
-                        return true;
+                        check = true;
                     }
                     else
                     {
                         ErrorMessage = "Build to close to another building";
-                        return false;
+                        check = false;
+                        return check;
                     }
                 }
             }
@@ -97,22 +109,38 @@ public class BuildingManager : MonoBehaviour
         foreach (Collider2D collider2D in colliderBuilding)
         {
             BuildingTypeHolder buildingTypeHolder = collider2D.GetComponent<BuildingTypeHolder>();
-            if (colliderBuilding.Length == 0) 
+            if (colliderBuilding.Length == 0)
             {
                 ErrorMessage = "";
-                return true; 
+                check = true;
             }
             else
             {
-                if (buildingTypeHolder != null)
+                if (buildingTypeHolder == null)
+                {
+                    ErrorMessage = "Build to far to another building";
+                    check = false;
+                }
+                else
                 {
                     ErrorMessage = "";
-                    return true;
+                    if (buildingType.resourceGeneratorData.resourceTypeSO != null)
+                    {
+                        if (ResourceGeneretor.GetNearByResourceNode(buildingType.resourceGeneratorData, position) > 0)
+                        {
+                            check = true;
+                        }
+                        else
+                        {
+                            check = false;
+                            ErrorMessage = "There are no nearby resources";
+                        }
+                    }
+                    return check;
                 }
             }
         }
-        ErrorMessage = "Build to far to another building";
-        return false;
+        return check;
     }
     public GameObject GetHeatQuarter()
     {

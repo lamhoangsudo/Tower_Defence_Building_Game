@@ -29,7 +29,7 @@ public class Tower : MonoBehaviour
         if (towerRadarTimeLoad <= 0f)
         {
             towerRadarTimeLoad = towerRadarTimeMaxLoad;
-            target = UtilClass.LookForTargets(this.transform, towerRadar, "EnemySystem");
+            target = UtilClass.LookForTargets<EnemySystem>(this.transform, towerRadar);
         }
     }
     private void HandlerShooting()
